@@ -2689,7 +2689,8 @@ def upsample_bilinear(const_context, builder, op):
         input_name=make_input(const_context, builder, op.x),
         output_name=op.outputs[0].name,
         mode="BILINEAR",
-        linear_upsample_mode="ALIGN_CORNERS_TRUE" if op.align_corners.val else "ALIGN_CORNERS_FALSE",
+        #linear_upsample_mode="ALIGN_CORNERS_TRUE" if op.align_corners.val else "ALIGN_CORNERS_FALSE",
+        linear_upsample_mode="DEFAULT", # WITH_DIRECTIVE
     )
 
 
