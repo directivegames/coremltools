@@ -2181,6 +2181,12 @@ def ResizeBilinear(context, node):
     align_corners = node.attr.get("align_corners", False)
     half_pixel_centers = node.attr.get("half_pixel_centers", False)
 
+    '''
+    WITH_DIRECTIVE: Hack to ensure iOS 13 compatibility
+    '''
+    align_corners = True
+    half_pixel_centers = False
+
     # first transpose to from channel last to channel first format for coreml
     x = _transpose_NHWC_to_NCHW(x)
 
