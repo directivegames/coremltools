@@ -1972,16 +1972,15 @@ class NeuralNetworkBuilder(object):
         spec_layer = self._add_generic_layer(name, [input_name], [output_name])
         spec_layer_params = spec_layer.upsample
         if (
-            scaling_factor_h - _math_floor(scaling_factor_h) > 0.01 # WITH_DIRECTIVE 0.001
-            or scaling_factor_w - _math_floor(scaling_factor_w) > 0.01 # WITH_DIRECTIVE 0.001
+            scaling_factor_h - _math_floor(scaling_factor_h) > 0.001
+            or scaling_factor_w - _math_floor(scaling_factor_w) > 0.001
         ):
             if mode != "BILINEAR" or linear_upsample_mode not in [
                 "ALIGN_CORNERS_TRUE",
                 "ALIGN_CORNERS_FALSE",
             ]:
                 raise ValueError(
-                    "Fractional upsampling only compatible with BILINEAR and ALIGN_CORNERS_TRUE or ALIGN_CORNERS_FALSE: {} {}".format(
-                        scaling_factor_h, scaling_factor_w)
+                    "Fractional upsampling only compatible with BILINEAR and ALIGN_CORNERS_TRUE or ALIGN_CORNERS_FALSE"
                 )
             spec_layer_params.fractionalScalingFactor.append(float(scaling_factor_h))
             spec_layer_params.fractionalScalingFactor.append(float(scaling_factor_w))
