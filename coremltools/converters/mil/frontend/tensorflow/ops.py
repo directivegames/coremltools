@@ -14,6 +14,8 @@ from .tf_op_registry import register_tf_op
 from coremltools.converters.mil.mil import types
 from coremltools.converters.mil.mil.types.symbolic import is_symbolic, any_symbolic
 
+# WITH_DIRECTIVE
+import os
 
 def _adjust_min_max(min, max, num_bits=8):
     if (min <= max) and (max <= 0):
@@ -2184,8 +2186,9 @@ def ResizeBilinear(context, node):
     '''
     WITH_DIRECTIVE: Hack to ensure iOS 13 compatibility
     '''
-    align_corners = True
-    half_pixel_centers = False
+    if os.environ.get('IOS13_HACK', None):
+        align_corners = True
+        half_pixel_centers = False
 
     # first transpose to from channel last to channel first format for coreml
     x = _transpose_NHWC_to_NCHW(x)
